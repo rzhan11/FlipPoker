@@ -17,21 +17,25 @@ def try_monte_carlo(policy, count):
 def probs_to_policy(probs):
     return lambda x, y: probs
 
-tops = [(7, 0), (7, 1), (7, 2), (7, 3), (9, 0), (9, 1), (9, 2), (9, 3), (10, 0), (10, 1), (10, 2), (10, 3), (11, 0), (11, 1), (11, 2), (11, 3), (12, 0), (12, 1), (12, 2), (12, 3)]
-# tops = utils.get_cards_of_suit(7) \
-#         + utils.get_cards_of_suit(9) \
-#         + utils.get_cards_of_suit(10) \
-#         + utils.get_cards_of_suit(11) \
-#         + utils.get_cards_of_suit(12)
-top_probs = [0 if index_to_card[i] in tops else 1 for i in range(NUM_CARDS)]
+
+# tops = [(4, 0), (4, 1), (4, 2), (4, 3), (8, 0), (8, 1), (8, 2), (8, 3), (9, 1), (9, 2), (9, 3), (10, 0), (10, 1), (10, 2), (10, 3), (11, 0), (11, 1), (11, 2), (11, 3), (12, 0), (12, 1), (12, 2), (12, 3)]
+tops = utils.get_cards_of_rank(4) \
+        + utils.get_cards_of_rank(8) \
+        + utils.get_cards_of_rank(9) \
+        + utils.get_cards_of_rank(10) \
+        + utils.get_cards_of_rank(11) \
+        + utils.get_cards_of_rank(12)
+print(tops)
+top_probs = [(1 if index_to_card[i] in tops else 0) for i in range(NUM_CARDS)]
 top_policy = probs_to_policy(top_probs)
-print("try", try_monte_carlo(top_policy, 100000))
+print("try", try_monte_carlo(top_policy, 100000), 100000)
 
 def random_walk_monte_carlo():
     WALK_LEN = 1000000
     GAMES_PER_STEP = 100000
     SAVE_INTERVAL = 10
 
+    # cur_probs = top_probs
     cur_probs = [random.randint(0, 1) for j in range(NUM_CARDS)]
     cur_wins = 0
     cur_games = 0
