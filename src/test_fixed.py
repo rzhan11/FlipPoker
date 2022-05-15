@@ -14,6 +14,8 @@ print("Score:", score)
 print("Type:", priority_to_hand_name[score[0]])
 print("Poker hand:", hand_to_str(poker_hand))
 
+
+
 def get_wants(player_hand, dealer_hand):
     return [0.5] * 52
 
@@ -22,10 +24,17 @@ num_games = 100000
 
 probs = [i / 100 for i in range(0, 100 + 1)]
 
+
+def get_exact_wants_from_prob(player_wants_prob):
+    rvals = np.random.uniform(size=52)
+    return [(1 if r < p else 0) for r, p in zip(rvals, player_wants_prob)]
+
+
 for p in probs:
     wins = 0
     for i in range(num_games):
-        res = game.play_game(lambda a, b : [p] * 52)
+        fixed_wants = get_exact_wants_from_prob([p] * 52)
+        res = game.play_game(lambda a, b : fixed_wants)
         if res > 0:
             wins += 1
             # print("I won")

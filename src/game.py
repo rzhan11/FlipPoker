@@ -33,10 +33,6 @@ def play_turn(player_wants, player_hand, dealer_hand, deck, deck_index):
     return player_hand, dealer_hand, deck_index
 
 
-def get_exact_wants_from_prob(player_wants_prob):
-    rvals = np.random.uniform(size=52)
-    return [(1 if r < p else 0) for r, p in zip(rvals, player_wants_prob)]
-
 
 def get_winner(player_hand, dealer_hand):
     # check for royal flush
@@ -60,8 +56,7 @@ def play_game(get_wants, player_hand_start=[], dealer_hand_start=[]):
     deck, deck_index = new_deck(), (len(player_hand) + len(dealer_hand))
     while True:
         # get player wants
-        player_wants_prob = get_wants(player_hand, dealer_hand)
-        player_wants = get_exact_wants_from_prob(player_wants_prob)
+        player_wants = get_wants(player_hand, dealer_hand)
         # complete turn
         player_hand, dealer_hand, deck_index = play_turn(player_wants, player_hand, dealer_hand, deck, deck_index)
         # check if game is over

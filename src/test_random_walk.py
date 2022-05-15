@@ -17,21 +17,20 @@ def try_monte_carlo(policy, count):
 def probs_to_policy(probs):
     return lambda x, y: probs
 
-
-tops = utils.get_cards_of_suit(4) \
-        + utils.get_cards_of_suit(8) \
-        + utils.get_cards_of_suit(9) \
-        + utils.get_cards_of_suit(10) \
-        + utils.get_cards_of_suit(11) \
-        + utils.get_cards_of_suit(12)
+tops = [(7, 0), (7, 1), (7, 2), (7, 3), (9, 0), (9, 1), (9, 2), (9, 3), (10, 0), (10, 1), (10, 2), (10, 3), (11, 0), (11, 1), (11, 2), (11, 3), (12, 0), (12, 1), (12, 2), (12, 3)]
+# tops = utils.get_cards_of_suit(7) \
+#         + utils.get_cards_of_suit(9) \
+#         + utils.get_cards_of_suit(10) \
+#         + utils.get_cards_of_suit(11) \
+#         + utils.get_cards_of_suit(12)
 top_probs = [0 if index_to_card[i] in tops else 1 for i in range(NUM_CARDS)]
-top_policy = lambda x, y: top_probs
-print("try", try_monte_carlo(top_policy, 10000))
+top_policy = probs_to_policy(top_probs)
+print("try", try_monte_carlo(top_policy, 100000))
 
 def random_walk_monte_carlo():
     WALK_LEN = 1000000
-    GAMES_PER_STEP = 10000
-    SAVE_INTERVAL = 100
+    GAMES_PER_STEP = 100000
+    SAVE_INTERVAL = 10
 
     cur_probs = [random.randint(0, 1) for j in range(NUM_CARDS)]
     cur_wins = 0
@@ -46,8 +45,9 @@ def random_walk_monte_carlo():
         cur_wins += try_monte_carlo(cur_policy, GAMES_PER_STEP)
         cur_games += GAMES_PER_STEP
         print("Cur cards:", cur_cards)
-        print("Cur wins:", cur_wins / cur_games * 100)
+        print("Cur win %:", cur_wins / cur_games * 100)
 
+        # create new probs by randomly flipping a bit (turn a card on/off)
         new_probs = cur_probs[:]
         index = random.randint(0, NUM_CARDS - 1)
         new_probs[index] = 1 - new_probs[index]
@@ -72,10 +72,3 @@ def random_walk_monte_carlo():
     return cur_probs
 
 random_walk_monte_carlo()
-
-def greedy_monte_carlo(player_hand, dealer_hand):
-    TRIALS = 100
-    rem_cards = {i for i in range(NUM_CARDS)}
-    for i in range(NUM_CARDS):
-        card = index_to_card[i]
-    num_cards_rem = NUM_CARDS - len(player_hand) - len(dealer_hand)
