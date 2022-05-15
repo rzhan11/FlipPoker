@@ -20,8 +20,7 @@ def probs_to_policy(probs):
 
 # tops = [(4, 0), (4, 1), (4, 2), (4, 3), (8, 0), (8, 1), (8, 2), (8, 3), (9, 1), (9, 2), (9, 3), (10, 0), (10, 1), (10, 2), (10, 3), (11, 0), (11, 1), (11, 2), (11, 3), (12, 0), (12, 1), (12, 2), (12, 3)]
 tops = utils.get_cards_of_rank(4) \
-        + utils.get_cards_of_rank(8) \
-        + utils.get_cards_of_rank(9) \
+        + utils.get_cards_of_rank(7) \
         + utils.get_cards_of_rank(10) \
         + utils.get_cards_of_rank(11) \
         + utils.get_cards_of_rank(12)
