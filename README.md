@@ -29,3 +29,15 @@ Graph of win-rate vs p-value:
 - Can get stuck at extremely poor strategy (maybe due to a very lucky run for a very bad strategy)
 
 ## Fixed strategy (with heuristic search)
+
+- Randomly initialize some set of fixed strategies (e.g. 10)
+- Perform a best first search using the following heuristic:
+  - the average win rate of its explored neighbors
+- Two fixed strategies are neighbors if they differ by exactly one card
+
+### Results
+- Found fixed strategy with win rate of ~31%
+  - Search parameters: initial_policy_count=10, games_per_step=10000
+  - [(4, 0), (4, 1), (4, 2), (4, 3), (9, 0), (9, 1), (9, 2), (9, 3), (11, 0), (11, 1), (11, 2), (11, 3), (12, 0), (12, 1), (12, 2), (12, 3)]
+  - All A/K/J/6
+- Will not get stuck at poor strategy, although it may be forced to explore unrewarding areas
