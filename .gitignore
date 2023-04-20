@@ -1,6 +1,7 @@
 **/.ipynb_checkpoints/
 *.pyc
 
+data/rating5.json
 data/potential.json
 data/poker-hand-testing.csv
 data/poker-hand-testing.csv.zip
